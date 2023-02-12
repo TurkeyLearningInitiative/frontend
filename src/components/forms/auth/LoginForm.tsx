@@ -1,5 +1,3 @@
-import type { LoginSchema } from "@/server/schemas/user.schema";
-import { loginSchema } from "@/server/schemas/user.schema";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import React from "react";
@@ -8,19 +6,35 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
+import { z } from "zod";
+import Logo from "../../../assets/Logo.png";
 
 type Props = {};
+
+export const loginSchema = z.object({
+  email: z.string().min(2),
+  password: z.string().min(2),
+});
+
+export type LoginSchema = z.infer<typeof loginSchema>;
 
 export default function LoginForm({}: Props) {
   const loginForm = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
 
+  // const { handleSubmit } = useForm<LoginSchema>({
+  //   resolver: zodResolver(loginSchema),
+  // });
+
   const router = useRouter();
 
-  const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log("Signed");
-    data.preventDefault();
+  const onSubmit: SubmitHandler<LoginSchema> = (event) => {
+    const email = event.target[0].value;
+    const password = event.target[0].value;
+    console.log("hello");
+    console.log({ email, password });
+    event.preventDefault();
 
     //void router.push("/");
   };
@@ -31,14 +45,7 @@ export default function LoginForm({}: Props) {
         <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-900">
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
-                className="h-12 w-auto"
-              >
-                <h2>logo</h2>
-              </motion.div>
+              <img src={Logo} />
               <motion.h2
                 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100"
                 initial={{ opacity: 0, y: 5 }}
@@ -114,7 +121,7 @@ export default function LoginForm({}: Props) {
                     <div className="mt-2 text-sm text-zinc-800 dark:text-gray-100">
                       Dont have an account?
                       <Link
-                        href="/auth/signup"
+                        href="/auth/register"
                         className="text-indigo-600 hover:text-indigo-500"
                       >
                         <span> </span>Register

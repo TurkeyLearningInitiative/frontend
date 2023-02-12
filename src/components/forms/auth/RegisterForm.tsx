@@ -28,7 +28,7 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
   });
 
   const onSubmit: SubmitHandler<RegisterFormType> = async (data) => {
-    console.log("Hello");
+    console.log(data);
   };
 
   const onError: SubmitErrorHandler<RegisterFormType> = (errors) => {
@@ -68,7 +68,10 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
             </div>
             <div className="mt-8">
               <div className="mt-6">
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+                <form
+                  onSubmit={handleSubmit(onSubmit, onError)}
+                  className="space-y-4"
+                >
                   <motion.div {...getMotionProps({ delay: 0.2 })}>
                     <InputGroup
                       as="input"
