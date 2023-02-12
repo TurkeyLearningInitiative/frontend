@@ -2,10 +2,9 @@ import { motion } from "framer-motion";
 import type { HTMLInputTypeAttribute } from "react";
 
 import { clsnm } from "../../../common/utils/clsnm";
-import type { LoginSchema } from "@/server/schemas/user.schema";
 
 export const LoginFormInput = (props: {
-  inputType: keyof LoginSchema;
+  inputType: any;
   delay: number;
   label: string;
   type: HTMLInputTypeAttribute;
