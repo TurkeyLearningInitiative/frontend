@@ -1,20 +1,26 @@
 import Hero from '@/components/Hero'
+import { FunctionComponent } from 'react'
 import AdminLayout from './AdminLayout'
 
-const people = [
-  {
-    name: 'Lindsay Walton',
-    title: 'Front-end Developer',
-    department: 'Optimization',
-    email: 'lindsay.walton@example.com',
-    role: 'Member',
-    image:
-      'https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80',
-  },
-  // More people...
-]
-
-export default function Dashboard() {
+interface ILectureNote {
+  _id: string
+  title: string
+  description: string
+  author: string
+  uploader: string
+  heroImageUrl: string
+  tags: string[]
+  searchText: string
+  classId: string
+  majorId: string
+  contentUrl: string
+  isVerified: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+const Dashboard: FunctionComponent<{ lectures: ILectureNote[] }> = ({
+  lectures,
+}) => {
   return (
     <AdminLayout>
       <Hero />
@@ -46,13 +52,25 @@ export default function Dashboard() {
                         scope="col"
                         className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
                       >
-                        Not Başlığı
+                        Görsel
                       </th>
                       <th
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Not Açıklama
+                        Başlık
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Açıklama
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Yazan
                       </th>
                       <th
                         scope="col"
@@ -64,60 +82,80 @@ export default function Dashboard() {
                         scope="col"
                         className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
                       >
-                        Tags
+                        Etiketler
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        İçerik
+                      </th>
+                      <th
+                        scope="col"
+                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
+                      >
+                        Onay Durumu
                       </th>
                       <th
                         scope="col"
                         className="relative py-3.5 pl-3 pr-4 sm:pr-6"
                       >
-                        <span className="sr-only">Düzenle</span>
+                        <span className="sr-only">Onayla</span>
                       </th>
                     </tr>
                   </thead>
                   <tbody className="divide-y divide-gray-200 bg-white">
-                    {people.map((person) => (
-                      <tr key={person.email}>
+                    {lectures.map((lecture) => (
+                      <tr key={lecture.title}>
                         <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
                           <div className="flex items-center">
-                            <div className="h-10 w-10 flex-shrink-0">
-                              <img
-                                className="h-10 w-10 rounded-full"
-                                src={person.image}
-                                alt=""
-                              />
-                            </div>
-                            <div className="ml-4">
-                              <div className="font-medium text-gray-900">
-                                {person.name}
-                              </div>
-                              <div className="text-gray-500">
-                                {person.email}
-                              </div>
-                            </div>
+                            <img
+                              className="h-10 w-10 "
+                              src={lecture.heroImageUrl}
+                              alt=""
+                            />
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">{person.title}</div>
-                          <div className="text-gray-500">
-                            {person.department}
+                          {lecture.title}
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <div className="text-gray-900">
+                            {lecture.description}
                           </div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <span className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800">
-                            Active
-                          </span>
+                          <div className="text-gray-900">{lecture.author}</div>
                         </td>
                         <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {person.role}
+                          <div className="text-gray-900">
+                            {lecture.uploader}
+                          </div>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          {lecture.tags.map((tag) => (
+                            <span
+                              key={tag}
+                              className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
+                            >
+                              {tag}
+                            </span>
+                          ))}
                         </td>
                         <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
                           <a
-                            href="#"
+                            href={lecture.contentUrl}
+                            target="_blank"
+                            rel="noreferrer"
                             className="text-indigo-600 hover:text-indigo-900"
                           >
-                            Düzenle
-                            <span className="sr-only">, {person.name}</span>
+                            İndir
                           </a>
+                        </td>
+                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
+                          <div className="text-gray-900">
+                            {lecture.isVerified ? 'Onaylandı' : 'Onaylanmadı'}
+                          </div>
                         </td>
                       </tr>
                     ))}
@@ -131,3 +169,17 @@ export default function Dashboard() {
     </AdminLayout>
   )
 }
+
+export async function getStaticProps() {
+  const res = await fetch(
+    'https://api-production-7e9a.up.railway.app/v1/lecture-notes'
+  )
+  const lectures = await res.json()
+
+  return {
+    props: {
+      lectures,
+    },
+  }
+}
+export default Dashboard
