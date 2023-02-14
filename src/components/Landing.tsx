@@ -1,13 +1,13 @@
-import { useState } from "react";
-import { Dialog } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
-import Logo from "./Logo";
-import SupportUs from "./SupportUs";
-import TwitterButton from "./TwitterButton";
-import { navigation } from "@/common/constants";
-import Image from "next/image";
+import { useState } from 'react'
+import { Dialog } from '@headlessui/react'
+import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import Logo from './Logo'
+import SupportUs from './SupportUs'
+import TwitterButton from './TwitterButton'
+import { navigation } from '@/common/constants'
+import Image from 'next/image'
 export default function Landing() {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
     <>
@@ -85,7 +85,7 @@ export default function Landing() {
               <div className="mx-auto max-w-2xl lg:mx-0 lg:max-w-xl">
                 <div className="hidden sm:mb-10 sm:flex">
                   <div className="relative rounded-full py-1 px-3 text-sm leading-6 text-gray-500 ring-1 ring-gray-900/10 hover:ring-gray-900/20">
-                    Gönüllü olarak çalışan bir ekibiz {"  "}
+                    Gönüllü olarak çalışan bir ekibiz {'  '}
                     <a
                       href="#"
                       className="whitespace-nowrap font-semibold text-indigo-600"
@@ -135,5 +135,5 @@ export default function Landing() {
       </div>
       <SupportUs />
     </>
-  );
+  )
 }
