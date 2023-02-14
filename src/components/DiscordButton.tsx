@@ -18,7 +18,7 @@ function DiscordButton({}: Props) {
 				height={24}
 				width={24}
 			/>
-			Discord'a katıl
+			Discord&apos;a katıl
 		</a>
 	);
 }
