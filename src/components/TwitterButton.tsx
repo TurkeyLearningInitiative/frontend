@@ -18,7 +18,7 @@ function TwitterButton({}: Props) {
 				height={24}
 				width={24}
 			/>
-			Twitterda destek ol
+			Twitter'da destek ol
 		</a>
 	);
 }
