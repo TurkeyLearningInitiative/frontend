@@ -2,23 +2,35 @@ import InputGroup from "@/common/InputGroup";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Image from "next/image";
 import React, { useCallback } from "react";
 import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
+import Logo from "../../../../public/image/auth/logo.png";
 
 import { z } from "zod";
 
-export const registerFormSchema = z.object({
-  name: z.string(),
-  email: z.string(),
-  password: z.string(),
-  password_again: z.string(),
-});
+export const registerFormSchema = z
+  .object({
+    name: z
+      .string()
+      .min(2, { message: "Name must be longer than 2 characters" }),
+    email: z.string().email({ message: "Please enter valid email" }),
+    password: z
+      .string()
+      .min(2, { message: "Password must be longer than 2 characters" }),
+    password_again: z
+      .string()
+      .min(2, { message: "Password must be longer than 2 characters" }),
+  })
+  .refine((data) => data.password === data.password_again, {
+    message: "Passwords don't match",
+    path: ["password_again"],
+  });
 
 export type RegisterFormType = z.infer<typeof registerFormSchema>;
 
 export const RegisterForm = (props: { onSubmitted: () => void }) => {
-  // TODO: Verify registration
   const {
     register,
     handleSubmit,
@@ -45,18 +57,18 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
 
   return (
     <>
-      <div className="flex min-h-full dark:bg-black">
+      <div className="flex min-h-screen dark:bg-black">
         <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-900">
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="h-40 w-40 "
+          >
+            <Image src={Logo} alt="Logo" className="" />
+          </motion.div>
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
-              <motion.div
-                initial={{ opacity: 0, y: 5 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.3, delay: 0.05 }}
-                className="h-12 w-auto"
-              >
-                <h2>Logo</h2>
-              </motion.div>
               <motion.h2
                 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100"
                 initial={{ opacity: 0, y: 5 }}
@@ -148,12 +160,6 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
                       </Link>
                     </div>
                   </motion.div>
-
-                  {errors.password_again && (
-                    <div className="mt-1 text-red-500">
-                      {errors.password_again.message?.toString()}
-                    </div>
-                  )}
                   <motion.div
                     {...getMotionProps({
                       delay: 0.55,
@@ -170,13 +176,6 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
               </div>
             </div>
           </div>
-        </div>
-        <div className="relative hidden w-0 flex-1 lg:block">
-          <img
-            className="absolute inset-0 h-full w-full object-cover"
-            src="/images/auth/uv-2.png"
-            alt="uv-protective-clothing"
-          />
         </div>
       </div>
     </>

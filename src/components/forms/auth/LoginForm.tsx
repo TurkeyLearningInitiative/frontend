@@ -1,48 +1,63 @@
 import { motion } from "framer-motion";
+import InputGroup from "@/common/InputGroup";
 import Link from "next/link";
 import React from "react";
-import { LoginFormInput } from "./LoginFormInput";
+import Image from "next/image";
 import { zodResolver } from "@hookform/resolvers/zod";
-import type { SubmitHandler } from "react-hook-form";
+import type { SubmitHandler, SubmitErrorHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
 import { useRouter } from "next/router";
 import { z } from "zod";
+import Logo from "../../../../public/image/auth/logo.png";
 
 type Props = {};
 
 export const loginSchema = z.object({
-  email: z.string().min(2, {
-    message: "Email is required",
-  }),
-  password: z.string().min(2),
+  email: z
+    .string()
+    .min(2, { message: "Email must be longer than 2 characters" })
+    .email({ message: "Please enter valid email" }),
+  password: z
+    .string()
+    .min(2, { message: "Password must be longer than 2 characters" }),
 });
 
 export type LoginSchema = z.infer<typeof loginSchema>;
 
-export default function LoginForm({}: Props) {
-  const loginForm = useForm<LoginSchema>({
+export const LoginForm = (props: { onSubmitted: () => void }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
   });
-
-  // const { handleSubmit } = useForm<LoginSchema>({
-  //   resolver: zodResolver(loginSchema),
-  // });
 
   const router = useRouter();
 
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log({ a: data.email, b: data.password });
-
+    console.log({ email: data.email, password: data.password });
     //void router.push("/");
+  };
+
+  const onError: SubmitErrorHandler<LoginSchema> = (errors) => {
+    console.log(errors);
   };
 
   return (
     <>
       <div className="flex min-h-screen dark:bg-black">
         <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-900">
+          <motion.div
+            initial={{ opacity: 0, y: 5 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.3, delay: 0.05 }}
+            className="h-40 w-40 "
+          >
+            <Image src={Logo} alt="Logo" className="" />
+          </motion.div>
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
-              <img src="/images/auth/logo" />
               <motion.h2
                 className="mt-6 text-3xl font-bold tracking-tight text-gray-900 dark:text-gray-100"
                 initial={{ opacity: 0, y: 5 }}
@@ -55,28 +70,24 @@ export default function LoginForm({}: Props) {
             <div className="mt-8 ">
               <div className="mt-6">
                 <form
-                  onSubmit={loginForm.handleSubmit(onSubmit)}
+                  onSubmit={handleSubmit(onSubmit, onError)}
                   className="space-y-4"
                 >
-                  <LoginFormInput
+                  <InputGroup
+                    as="input"
                     type="text"
-                    delay={0.15}
                     label="Email"
-                    inputType="email"
-                    {...loginForm.register("email")}
+                    placeholder="Email"
+                    errorMessage={errors.email?.message}
+                    {...register("email")}
                   />
-                  <h4 className=" font-medium text-sm text-red-400">
-                    {loginForm?.formState?.errors?.email?.message}
-                  </h4>
-                  <LoginFormInput
+                  <InputGroup
                     type="password"
-                    delay={0.2}
+                    placeholder="Password"
+                    errorMessage={errors.password?.message}
                     label="Password"
-                    inputType="password"
+                    {...register("password")}
                   />
-                  <h4 className=" font-medium text-sm text-red-400">
-                    {loginForm?.formState?.errors?.password?.message}
-                  </h4>
                   <motion.div
                     className="flex items-center justify-between"
                     initial={{ opacity: 0, y: 5 }}
@@ -142,4 +153,4 @@ export default function LoginForm({}: Props) {
       </div>
     </>
   );
-}
+};
