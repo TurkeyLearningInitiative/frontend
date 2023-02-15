@@ -65,7 +65,9 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
             transition={{ duration: 0.3, delay: 0.05 }}
             className="h-40 w-40 "
           >
-            <Image src={Logo} alt="Logo" className="" />
+            <Link href={"/"}>
+              <Image src={Logo} alt="Logo" className="" />
+            </Link>
           </motion.div>
           <div className="mx-auto w-full max-w-sm lg:w-96">
             <div>
