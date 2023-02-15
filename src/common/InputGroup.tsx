@@ -51,7 +51,7 @@ const InputGroup = React.forwardRef(function <T extends AsType>(
             ref={ref}
             {...props}
             className={clsnm(
-              "block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm",
+              "block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:text-white",
               errorMessage ? "border-red-500" : "border-gray-300",
               "placeholder-gray-400",
               "dark:border-gray-700 dark:bg-gray-800 dark:placeholder-gray-500",

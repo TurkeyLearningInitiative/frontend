@@ -4,7 +4,11 @@ import React from "react";
 export default function Signup() {
   return (
     <div>
-      <RegisterForm />
+      <RegisterForm
+        onSubmitted={function (asd): void {
+          console.log(asd);
+        }}
+      />
     </div>
   );
 }
