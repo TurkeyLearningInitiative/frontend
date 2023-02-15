@@ -7,7 +7,7 @@ export const navigation = [
 ]
 
 export const socialLinks = {
-  discord: 'https://discord.gg/RqrBkn2d',
+  discord: 'https://discord.gg/G3uEnacM',
   twitter: 'https://twitter.com/hashtag/TurkeyLearningInitiative',
   github:
     'https://github.com/ayyucedemirbas/TurkeyLearningInitiative/network/members',
