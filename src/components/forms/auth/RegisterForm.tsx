@@ -6,7 +6,7 @@ import Image from "next/image";
 import React, { useCallback } from "react";
 import type { SubmitErrorHandler, SubmitHandler } from "react-hook-form";
 import { useForm } from "react-hook-form";
-import Logo from "../../../../public/image/auth/logo.png";
+import Logo from "./auth/logo.png";
 
 import { z } from "zod";
 
@@ -58,7 +58,7 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
   return (
     <>
       <div className="flex min-h-screen dark:bg-black">
-        <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-900">
+        <div className="flex flex-1 flex-col justify-center py-12 px-4 sm:px-6 lg:flex-none lg:px-20 xl:px-24 bg-gray-50 dark:bg-gray-900">
           <motion.div
             initial={{ opacity: 0, y: 5 }}
             animate={{ opacity: 1, y: 0 }}
@@ -66,7 +66,12 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
             className="h-40 w-40 "
           >
             <Link href={"/"}>
-              <Image src={Logo} alt="Logo" className="" />
+              <Image
+                src={"/image/auth/logo.png"}
+                alt="Logo"
+                width={150}
+                height={150}
+              />
             </Link>
           </motion.div>
           <div className="mx-auto w-full max-w-sm lg:w-96">
@@ -156,7 +161,7 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
                     <div className="text-sm">
                       <Link
                         href="/auth/login"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="font-medium text-orange-700 hover:text-indigo-500"
                       >
                         Already have an account?
                       </Link>
@@ -169,7 +174,7 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
                   >
                     <button
                       type="submit"
-                      className="text-zinc-900 bg-white outline-offset-2 outline-2 font-semibold text-sm py-2 px-3 rounded-lg justify-center w-full "
+                      className="text-white dark:text-black dark:bg-white bg-black outline-offset-2 outline-2 font-semibold text-sm py-2 px-3 rounded-lg justify-center w-full "
                     >
                       Register
                     </button>
@@ -178,6 +183,13 @@ export const RegisterForm = (props: { onSubmitted: () => void }) => {
               </div>
             </div>
           </div>
+        </div>
+        <div className="relative hidden w-0 flex-1 lg:block">
+          <img
+            className="absolute inset-0 h-full w-full object-cover"
+            src="/image/auth/Signup.png"
+            alt=""
+          />
         </div>
       </div>
     </>
