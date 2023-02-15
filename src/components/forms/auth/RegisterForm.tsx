@@ -30,7 +30,9 @@ export const registerFormSchema = z
 
 export type RegisterFormType = z.infer<typeof registerFormSchema>
 
-export const RegisterForm = (props: { onSubmitted: () => void }) => {
+export const RegisterForm = (props: {
+  onSubmitted: (data: RegisterFormType) => void
+}) => {
   const {
     register,
     handleSubmit,

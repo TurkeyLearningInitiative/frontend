@@ -23,7 +23,9 @@ export const loginSchema = z.object({
 
 export type LoginSchema = z.infer<typeof loginSchema>
 
-export const LoginForm = (props: { onSubmitted: () => void }) => {
+export const LoginForm = (props: {
+  onSubmitted: (data: LoginSchema) => void
+}) => {
   const {
     register,
     handleSubmit,
