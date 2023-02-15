@@ -20,7 +20,7 @@ module.exports = {
         info: colors.sky,
       },
       fontFamily: {
-        'poppins': ['Poppins', 'sans-serif']
+        poppins: ['Poppins', 'sans-serif'],
       },
     },
   },
