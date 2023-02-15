@@ -1,27 +1,27 @@
-import { motion } from "framer-motion";
-import InputGroup from "@/common/InputGroup";
-import Link from "next/link";
-import React from "react";
-import Image from "next/image";
-import { zodResolver } from "@hookform/resolvers/zod";
-import type { SubmitHandler, SubmitErrorHandler } from "react-hook-form";
-import { useForm } from "react-hook-form";
-import { useRouter } from "next/router";
-import { z } from "zod";
+import { motion } from 'framer-motion'
+import InputGroup from '@/common/InputGroup'
+import Link from 'next/link'
+import React from 'react'
+import Image from 'next/image'
+import { zodResolver } from '@hookform/resolvers/zod'
+import type { SubmitHandler, SubmitErrorHandler } from 'react-hook-form'
+import { useForm } from 'react-hook-form'
+import { useRouter } from 'next/router'
+import { z } from 'zod'
 
-type Props = {};
+type Props = {}
 
 export const loginSchema = z.object({
   email: z
     .string()
-    .min(2, { message: "Email must be longer than 2 characters" })
-    .email({ message: "Please enter valid email" }),
+    .min(2)
+    .email({ message: 'Lütfen geçerli bir e-posta girin.' }),
   password: z
     .string()
-    .min(2, { message: "Password must be longer than 2 characters" }),
-});
+    .min(2, { message: 'Şifre en az 2 karakterden oluşmalıdır.' }),
+})
 
-export type LoginSchema = z.infer<typeof loginSchema>;
+export type LoginSchema = z.infer<typeof loginSchema>
 
 export const LoginForm = (props: { onSubmitted: () => void }) => {
   const {
@@ -30,18 +30,18 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
     formState: { errors },
   } = useForm<LoginSchema>({
     resolver: zodResolver(loginSchema),
-  });
+  })
 
-  const router = useRouter();
+  const router = useRouter()
 
   const onSubmit: SubmitHandler<LoginSchema> = (data) => {
-    console.log({ email: data.email, password: data.password });
+    console.log({ email: data.email, password: data.password })
     //void router.push("/");
-  };
+  }
 
   const onError: SubmitErrorHandler<LoginSchema> = (errors) => {
-    console.log(errors);
-  };
+    console.log(errors)
+  }
 
   return (
     <>
@@ -53,9 +53,9 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
             transition={{ duration: 0.3, delay: 0.05 }}
             className="h-40 w-40 "
           >
-            <Link href={"/"}>
+            <Link href={'/'}>
               <Image
-                src={"/image/auth/logo.png"}
+                src={'/image/auth/logo.png'}
                 alt="Logo"
                 width={150}
                 height={150}
@@ -70,7 +70,7 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.3, delay: 0.15 }}
               >
-                Login to your account
+                Hesabınıza giriş yapın
               </motion.h2>
             </div>
             <div className="mt-8 ">
@@ -82,17 +82,17 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
                   <InputGroup
                     as="input"
                     type="text"
-                    label="Email"
-                    placeholder="Email"
+                    label="E-posta"
+                    placeholder="E-posta"
                     errorMessage={errors.email?.message}
-                    {...register("email")}
+                    {...register('email')}
                   />
                   <InputGroup
                     type="password"
-                    placeholder="Password"
+                    placeholder="Şifre"
+                    label="Şifre"
                     errorMessage={errors.password?.message}
-                    label="Password"
-                    {...register("password")}
+                    {...register('password')}
                   />
                   <motion.div
                     className="flex items-center justify-between"
@@ -114,16 +114,16 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
                         htmlFor="remember-me"
                         className="ml-2 block text-sm text-gray-900 dark:text-gray-300"
                       >
-                        Remember me
+                        Beni Hatırla
                       </label>
                     </div>
 
                     <div className="text-sm">
                       <Link
                         href="/forgot-password"
-                        className="font-medium text-indigo-600 hover:text-indigo-500"
+                        className="font-medium  text-orange-700 hover:text-orange-300"
                       >
-                        Forgot your password?
+                        Parolanızı mı unuttunuz?
                       </Link>
                     </div>
                   </motion.div>
@@ -139,15 +139,15 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
                       type="submit"
                       className="text-white dark:text-black dark:bg-white bg-black outline-offset-2 outline-2 font-semibold text-sm py-2 px-3 rounded-lg justify-center w-full "
                     >
-                      Sign in
+                      Kayıt Ol
                     </button>
                     <div className="mt-2 text-sm text-zinc-800 dark:text-gray-100">
-                      Dont have an account?
+                      Hesabınız yok mu?
                       <Link
                         href="/auth/register"
-                        className="text-indigo-600 hover:text-indigo-500"
+                        className=" text-orange-700 hover:text-orange-300"
                       >
-                        <span> </span>Register
+                        <span> </span>Kayıt Ol
                       </Link>
                     </div>
                   </motion.div>
@@ -165,5 +165,5 @@ export const LoginForm = (props: { onSubmitted: () => void }) => {
         </div>
       </div>
     </>
-  );
-};
+  )
+}
