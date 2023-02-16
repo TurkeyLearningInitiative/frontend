@@ -10,9 +10,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@headlessui/react": "^0.0.0-insiders.fcfd554",
+    "@emotion/react": "^11.10.5",
+    "@emotion/styled": "^11.10.5",
+    "@headlessui/react": "^1.7.11",
     "@heroicons/react": "^2.0.15",
     "@hookform/resolvers": "^2.9.11",
+    "@mui/icons-material": "^5.11.9",
+    "@mui/material": "^5.11.9",
     "@next/font": "13.1.6",
     "@types/node": "18.13.0",
     "@types/react": "18.0.28",
@@ -22,6 +26,7 @@
     "eslint": "8.34.0",
     "eslint-config-next": "13.1.6",
     "framer-motion": "^9.0.2",
+    "material-react-table": "^1.7.4",
     "next": "13.1.6",
     "react": "18.2.0",
     "react-dom": "18.2.0",

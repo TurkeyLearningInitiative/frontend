@@ -1,7 +1,6 @@
 import { socialLinks } from '@/common/constants'
 import Image from 'next/image'
-import React from 'react'
-import DiscordButton from './DiscordButton'
+import DiscordButton from './buttons/DiscordButton'
 
 type Props = {}
 
