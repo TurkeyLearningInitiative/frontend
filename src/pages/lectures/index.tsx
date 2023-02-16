@@ -81,8 +81,8 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Lectures(lectures:any) {
- const lecturesArray:ILectureNote[] = lectures.lectures
+export default function Lectures(lectures: any) {
+  const lecturesArray: ILectureNote[] = lectures.lectures
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
   console.log(lecturesArray)
   return (
@@ -363,7 +363,7 @@ export default function Lectures(lectures:any) {
 
               {/* Product grid */}
               <div className="lg:col-span-3">
-              {lecturesArray.map((lecture) => (
+                {lecturesArray.map((lecture) => (
                   <div key={lecture._id} className="lecture-card w-1/4">
                     {lecture.classId}
                   </div>
@@ -386,7 +386,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      lectures:lectures,
+      lectures: lectures,
     },
   }
 }
