@@ -1,7 +1,9 @@
 ## Describe your changes
+
 <!--- Describe your changes in detail -->
 
 # Disord Username
+
 <!--- Your discord username -->
 
 ## Issue ticket number and link
