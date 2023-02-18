@@ -1,4 +1,50 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+## To support the project
+
+[Story of Project](https://github.com/TurkeyLearningInitiative)
+
+Communications:
+
+- [Discord Channel](https://discord.com/invite/UCvcNAy7)
+
+# To Contribute:
+  Please check the issues by forking the repo for Contribution.
+- [Issues](/issues)
+
+
+## Technologies and Systems Used In This Project
+
+- [Next.js 13](https://github.com/vercel/next.js/)
+- [React 18](https://github.com/facebook/react)
+- [TypeScript](https://github.com/microsoft/TypeScript)
+- Absolute Import and Path Alias — Components to import with `@/` prefix
+- [ESLint](https://github.com/eslint/eslint) — To find bugs in your code according to specific rules
+- [Prettier](https://github.com/prettier/prettier) — To format the code according to specific guidelines
+- [Husky](https://github.com/typicode/husky) & [Lint Staged](https://github.com/okonet/lint-staged) — To check whether they comply with the rules before you commit the changes.
+
+## To Begin
+
+### 1. Clone or Fork the Repo:
+
+```bash
+git clone https://github.com/TurkeyLearningInitiative/frontend.git
+```
+
+### 2. Install Dependencies:
+
+**yarn** is suggested.
+
+```bash
+yarn
+```
+
+### 3. Run the Development Environment:
+
+```bash
+yarn dev
+```
+
+You can open up the [http://localhost:3000](http://localhost:3000) address on your browser to see the result.
+
 
 ## Getting Started
 
@@ -12,27 +58,3 @@ yarn dev
 pnpm dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
-
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
-
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
-
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.

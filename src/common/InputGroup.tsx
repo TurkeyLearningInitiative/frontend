@@ -1,26 +1,26 @@
-import React, { InputHTMLAttributes, TextareaHTMLAttributes } from "react";
-import { clsnm } from "./utils/clsnm";
+import React, { InputHTMLAttributes, TextareaHTMLAttributes } from 'react'
+import { clsnm } from './utils/clsnm'
 
-type AsType = "input" | "textarea";
+type AsType = 'input' | 'textarea'
 
-type InputType<T> = T extends "textarea"
+type InputType<T> = T extends 'textarea'
   ? HTMLTextAreaElement
-  : T extends "input"
+  : T extends 'input'
   ? HTMLInputElement
-  : never;
+  : never
 
-type InputAttributes<T> = T extends "textarea"
+type InputAttributes<T> = T extends 'textarea'
   ? TextareaHTMLAttributes<HTMLTextAreaElement>
-  : T extends "input"
+  : T extends 'input'
   ? InputHTMLAttributes<HTMLInputElement>
-  : never;
+  : never
 
 type InputGroupProps<T> = InputAttributes<T> & {
-  label?: string;
-  errorMessage?: string;
-  customInput?: React.ReactNode;
-  as?: AsType;
-};
+  label?: string
+  errorMessage?: string
+  customInput?: React.ReactNode
+  as?: AsType
+}
 // : never;
 
 const InputGroup = React.forwardRef(function <T extends AsType>(
@@ -29,13 +29,13 @@ const InputGroup = React.forwardRef(function <T extends AsType>(
     customInput,
     label,
     errorMessage,
-    as = "input",
+    as = 'input',
     ...props
   }: InputGroupProps<T>,
   ref: React.LegacyRef<InputType<T>>
 ) {
-  const MainInput = customInput as any;
-  const Main = as as any;
+  const MainInput = customInput as any
+  const Main = as as any
 
   return (
     <label className="flex w-full flex-col">
@@ -51,10 +51,10 @@ const InputGroup = React.forwardRef(function <T extends AsType>(
             ref={ref}
             {...props}
             className={clsnm(
-              "block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:text-white",
-              errorMessage ? "border-red-500" : "border-gray-300",
-              "placeholder-gray-400",
-              "dark:border-gray-700 dark:bg-gray-800 dark:placeholder-gray-500",
+              'block w-full appearance-none rounded-md border px-3 py-2 shadow-sm focus:border-indigo-500 focus:outline-none focus:ring-indigo-500 sm:text-sm dark:text-white',
+              errorMessage ? 'border-red-500' : 'border-gray-300',
+              'placeholder-gray-400',
+              'dark:border-gray-700 dark:bg-gray-800 dark:placeholder-gray-500',
               className
             )}
           />
@@ -64,8 +64,8 @@ const InputGroup = React.forwardRef(function <T extends AsType>(
         )}
       </div>
     </label>
-  );
-});
+  )
+})
 
-InputGroup.displayName = "InputGroup";
-export default InputGroup;
+InputGroup.displayName = 'InputGroup'
+export default InputGroup
