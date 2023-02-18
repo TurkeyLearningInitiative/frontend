@@ -3,7 +3,7 @@ export const navigation = [
   { name: 'Hedefimiz?', href: '#' },
   { name: 'Takımımız', href: '#' },
   { name: 'Destek ol', href: '#destek-ol' },
-  { name: 'Giriş', href: '#' },
+  { name: 'Giriş', href: 'auth/login' },
 ]
 
 export const socialLinks = {
