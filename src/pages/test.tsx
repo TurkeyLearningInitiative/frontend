@@ -1,5 +1,5 @@
 import Hero from '@/components/Hero'
-import BaseLayout from '@/components/layouts/BaseLayout'
+import BaseLayout from '@/components/BaseLayout'
 import OurTeam from '@/components/OurTeam'
 import { Statistics } from '@/components/Statistics'
 import { FunctionComponent } from 'react'
