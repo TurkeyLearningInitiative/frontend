@@ -1,4 +1,4 @@
-import Logo from '../Logo'
+import Logo from './Logo'
 import Link from 'next/link'
 const navigation = [
   { name: 'Biz Kimiz', href: '#', current: true },

@@ -1,6 +1,6 @@
 import { navigation, socialLinks } from '@/common/constants'
 import { SVGProps } from 'react'
-import { SocialIcons } from '../SocialIcons'
+import { SocialIcons } from './SocialIcons'
 const navigationFooter = {
   main: navigation,
   social: [
