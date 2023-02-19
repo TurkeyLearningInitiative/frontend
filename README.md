@@ -7,9 +7,10 @@ Communications:
 - [Discord Channel](https://discord.com/invite/UCvcNAy7)
 
 # To Contribute:
-  Please check the issues by forking the repo for Contribution.
-- [Issues](/issues)
 
+Please check the issues by forking the repo for Contribution.
+
+- [Issues](/issues)
 
 ## Technologies and Systems Used In This Project
 
@@ -45,7 +46,6 @@ yarn dev
 
 You can open up the [http://localhost:3000](http://localhost:3000) address on your browser to see the result.
 
-
 ## Getting Started
 
 First, run the development server:
@@ -57,4 +57,3 @@ yarn dev
 # or
 pnpm dev
 ```
-

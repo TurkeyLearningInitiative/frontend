@@ -1,4 +1,5 @@
 /** @type {import('tailwindcss').Config} */
+const colors = require('tailwindcss/colors')
 module.exports = {
   content: [
     './app/**/*.{js,ts,jsx,tsx}',
@@ -9,7 +10,19 @@ module.exports = {
     './src/**/*.{js,ts,jsx,tsx}',
   ],
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        primary: colors.indigo,
+        secondary: colors.gray,
+        success: colors.teal,
+        warning: colors.amber,
+        danger: colors.rose,
+        info: colors.sky,
+      },
+      fontFamily: {
+        poppins: ['Poppins', 'sans-serif'],
+      },
+    },
   },
-  plugins: [],
+  plugins: [require('@tailwindcss/forms')],
 }
