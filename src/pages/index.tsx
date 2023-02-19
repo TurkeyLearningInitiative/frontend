@@ -2,7 +2,6 @@ import Head from 'next/head'
 import Landing from '../components/Landing'
 import OurTeam from '@/components/OurTeam'
 
-
 export default function Home() {
   return (
     <>

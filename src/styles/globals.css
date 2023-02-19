@@ -10,11 +10,10 @@ html {
 @layer components {
   .base-link {
     @apply font-semibold cursor-pointer text-secondary-600 hover:text-primary-500 transition-all;
-
   }
   .base-btn {
     @apply shadow-sm  focus-visible:outline-2 focus-visible:outline-offset-2  focus-visible:outline text-base font-semibold text-white cursor-pointer rounded-md transition-all;
-    
+
     &-sm {
       @apply p-2;
     }
@@ -22,7 +21,7 @@ html {
       @apply px-3.5 py-1.5;
     }
     &-lg {
-      @apply  px-4 py-2;
+      @apply px-4 py-2;
     }
     &-primary {
       @apply bg-primary-500 hover:bg-primary-400 focus-visible:outline-primary-600;

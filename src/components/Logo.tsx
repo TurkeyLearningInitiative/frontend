@@ -6,7 +6,7 @@ type Props = {}
 
 function Logo({}: Props) {
   return (
-    <Link href="#" className='p-2'>
+    <Link href="#" className="p-2">
       <Image
         alt="TurkeyLearningInitiative"
         className="h-12 w-auto"

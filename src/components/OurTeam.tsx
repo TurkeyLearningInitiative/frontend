@@ -32,7 +32,7 @@ export default function OurTeam() {
   }
 
   return (
-    <section className='bg-white py-20' id="our-team">
+    <section className="bg-white py-20" id="our-team">
       <div className="container px-2 mx-auto">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">

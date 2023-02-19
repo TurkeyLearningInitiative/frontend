@@ -25,9 +25,9 @@ const Home: FunctionComponent<{ lectures: ILectureNote[] }> = ({
 }) => {
   return (
     <BaseLayout>
-        <Hero />
-        <Statistics />
-        <OurTeam />
+      <Hero />
+      <Statistics />
+      <OurTeam />
       <div>
         {' '}
         <h1>Recent Lectures Section</h1>

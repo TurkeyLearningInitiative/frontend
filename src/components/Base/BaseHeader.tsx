@@ -17,13 +17,22 @@ export default function BaseHeader() {
         <Logo></Logo>
       </div>
       <nav>
-        <ul className='flex items-center justify-cente space-x-6'>
+        <ul className="flex items-center justify-cente space-x-6">
           {navigation.map((navItem) => (
             <li key={navItem.name}>
-              <Link className='base-link p-2' href={navItem.href}>{navItem.name}</Link>
+              <Link className="base-link p-2" href={navItem.href}>
+                {navItem.name}
+              </Link>
             </li>
           ))}
-          <li><Link className='base-btn base-btn-success base-btn-sm' href='/login'>Giriş</Link></li>
+          <li>
+            <Link
+              className="base-btn base-btn-success base-btn-sm"
+              href="/login"
+            >
+              Giriş
+            </Link>
+          </li>
         </ul>
       </nav>
     </header>
