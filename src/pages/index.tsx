@@ -1,20 +1,51 @@
-import Head from 'next/head'
-import Landing from '../components/Landing'
+import Hero from '@/components/BrandHero'
+import BaseLayout from '@/components/BaseLayout'
 import OurTeam from '@/components/OurTeam'
+import { Statistics } from '@/components/Statistics'
+import { FunctionComponent } from 'react'
 
-export default function Home() {
+interface ILectureNote {
+  _id: string
+  title: string
+  description: string
+  author: string
+  uploader: string
+  heroImageUrl: string
+  tags: string[]
+  searchText: string
+  classId: string
+  majorId: string
+  contentUrl: string
+  isVerified: boolean
+  createdAt: Date
+  updatedAt: Date
+}
+const Home: FunctionComponent<{ lectures: ILectureNote[] }> = ({
+  lectures,
+}) => {
   return (
-    <>
-      <Head>
-        <title>Turkey Learning Initiative</title>
-        <meta name="description" content="TurkeyLearningInitiative" />
-        <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-      <main className="container mx-auto">
-        <Landing />
-        <OurTeam />
-      </main>
-    </>
+    <BaseLayout>
+      <Hero />
+      <Statistics />
+      <OurTeam />
+      <div>
+        {' '}
+        <h1>Recent Lectures Section</h1>
+      </div>
+    </BaseLayout>
   )
 }
+
+export async function getStaticProps() {
+  const res = await fetch(
+    'https://api-production-7e9a.up.railway.app/v1/lecture-notes'
+  )
+  const lectures = await res.json()
+
+  return {
+    props: {
+      lectures,
+    },
+  }
+}
+export default Home

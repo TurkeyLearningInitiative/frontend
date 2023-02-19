@@ -1,4 +1,4 @@
-import Hero from '@/components/Hero'
+import Hero from '@/components/BrandHero'
 import { FunctionComponent } from 'react'
 import AdminLayout from './AdminLayout'
 
