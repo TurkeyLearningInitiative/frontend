@@ -84,7 +84,7 @@ export default function BaseHeader() {
             aria-labelledby="user-menu-button"
             tabIndex={-1}
           >
-            <nav className='p-8'>
+            <nav className="p-8">
               <ul className="space-y-6">
                 {navigation.map((navItem) => (
                   <li key={navItem.name}>
@@ -93,7 +93,7 @@ export default function BaseHeader() {
                     </Link>
                   </li>
                 ))}
-                <li className='w-full'>
+                <li className="w-full">
                   <Link
                     className="base-btn inline-block text-center base-btn-success w-full base-btn-sm"
                     href="/login"
@@ -104,10 +104,8 @@ export default function BaseHeader() {
               </ul>
             </nav>
           </div>
-
-      </div>
+        </div>
       </nav>
-
     </header>
   )
 }
