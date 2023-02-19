@@ -32,8 +32,8 @@ export default function OurTeam() {
   }
 
   return (
-    <div className="bg-white py-24 sm:py-32" id="our-team">
-      <div className="mx-auto max-w-7xl px-6 lg:px-8">
+    <section className='bg-white py-20' id="our-team">
+      <div className="container px-2 mx-auto">
         <div className="mx-auto max-w-2xl lg:mx-0">
           <h2 className="text-3xl font-bold tracking-tight text-gray-900 sm:text-4xl">
             Our team
@@ -62,7 +62,7 @@ export default function OurTeam() {
           ))}
         </ul>
       </div>
-    </div>
+    </section>
   )
 }
 

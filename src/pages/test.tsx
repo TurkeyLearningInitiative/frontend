@@ -1,5 +1,7 @@
 import Hero from '@/components/Hero'
-import BaseLayout from '@/components/Layouts/BaseLayout'
+import BaseLayout from '@/components/layouts/BaseLayout'
+import OurTeam from '@/components/OurTeam'
+import { Statistics } from '@/components/Statistics'
 import { FunctionComponent } from 'react'
 
 interface ILectureNote {
@@ -23,15 +25,9 @@ const Home: FunctionComponent<{ lectures: ILectureNote[] }> = ({
 }) => {
   return (
     <BaseLayout>
-      {/* <Hero /> */}
-      <div>
-        {' '}
-        <h1>Hero Section</h1>
-      </div>
-      <div>
-        {' '}
-        <h1>Stats Section</h1>
-      </div>
+        <Hero />
+        <Statistics />
+        <OurTeam />
       <div>
         {' '}
         <h1>Recent Lectures Section</h1>
