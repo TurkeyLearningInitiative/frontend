@@ -24,9 +24,18 @@ const Home: FunctionComponent<{ lectures: ILectureNote[] }> = ({
   return (
     <BaseLayout>
       {/* <Hero /> */}
-      <div> <h1>Hero Section</h1></div>
-      <div> <h1>Stats Section</h1></div>
-      <div> <h1>Recent Lectures Section</h1></div>
+      <div>
+        {' '}
+        <h1>Hero Section</h1>
+      </div>
+      <div>
+        {' '}
+        <h1>Stats Section</h1>
+      </div>
+      <div>
+        {' '}
+        <h1>Recent Lectures Section</h1>
+      </div>
     </BaseLayout>
   )
 }

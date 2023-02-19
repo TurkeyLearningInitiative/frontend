@@ -21,10 +21,15 @@ export default function BaseHeader() {
         <Logo></Logo>
       </div>
       <nav>
-        <ul className='flex items-center justify-center'>
+        <ul className="flex items-center justify-center">
           {navigation.map((navItem) => (
             <li key={navItem.name}>
-              <Link className='base-link hover:text-purple-500' href={navItem.href}>{navItem.name}</Link>
+              <Link
+                className="base-link hover:text-purple-500"
+                href={navItem.href}
+              >
+                {navItem.name}
+              </Link>
             </li>
           ))}
         </ul>

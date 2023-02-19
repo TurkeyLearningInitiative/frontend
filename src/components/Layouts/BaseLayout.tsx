@@ -16,11 +16,11 @@ const BaseLayout: FunctionComponent<IProps> = ({ children }) => {
     <>
       <div>
         <BaseHeader></BaseHeader>
-          <div className="mx-auto flex max-w-4xl flex-col md:px-8 xl:px-0">
-            <main>{children} </main>
-            <Footer />
-          </div>
+        <div className="mx-auto flex max-w-4xl flex-col md:px-8 xl:px-0">
+          <main>{children} </main>
+          <Footer />
         </div>
+      </div>
     </>
   )
 }
