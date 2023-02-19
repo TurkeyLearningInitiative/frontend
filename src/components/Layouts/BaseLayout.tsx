@@ -1,6 +1,6 @@
 import { FunctionComponent, PropsWithChildren, useState } from 'react'
-import BaseFooter from '../base/BaseFooter'
-import BaseHeader from '../base/BaseHeader'
+import BaseFooter from '@/components/base/BaseFooter'
+import BaseHeader from '@/components/base/BaseHeader'
 
 interface IProps extends PropsWithChildren {}
 const BaseLayout: FunctionComponent<IProps> = ({ children }) => {
