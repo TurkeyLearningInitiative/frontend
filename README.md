@@ -1,3 +1,5 @@
+![GitHub stars](https://img.shields.io/github/stars/TurkeyLearningInitiative/frontend?style=social) ![GitHub forks](https://img.shields.io/github/forks/TurkeyLearningInitiative/frontend?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/TurkeyLearningInitiative/frontend?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub language count](https://img.shields.io/github/languages/count/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub top language](https://img.shields.io/github/languages/top/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub last commit](https://img.shields.io/github/last-commit/TurkeyLearningInitiative/frontend?color=red&style=plastic) ![GitHub issues](https://img.shields.io/github/issues/TurkeyLearningInitiative/frontend)
+
 ## To support the project
 
 [Story of Project](https://github.com/TurkeyLearningInitiative)
@@ -58,3 +60,8 @@ yarn dev
 pnpm dev
 ```
 
+## Contributors
+
+<a href="https://github.com/TurkeyLearningInitiative/frontend/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=TurkeyLearningInitiative/frontend" />
+</a>
