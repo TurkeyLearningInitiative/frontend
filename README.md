@@ -1,4 +1,5 @@
 ![GitHub stars](https://img.shields.io/github/stars/TurkeyLearningInitiative/frontend?style=social) ![GitHub forks](https://img.shields.io/github/forks/TurkeyLearningInitiative/frontend?style=social) ![GitHub watchers](https://img.shields.io/github/watchers/TurkeyLearningInitiative/frontend?style=social) ![GitHub repo size](https://img.shields.io/github/repo-size/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub language count](https://img.shields.io/github/languages/count/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub top language](https://img.shields.io/github/languages/top/TurkeyLearningInitiative/frontend?style=plastic) ![GitHub last commit](https://img.shields.io/github/last-commit/TurkeyLearningInitiative/frontend?color=red&style=plastic) ![GitHub issues](https://img.shields.io/github/issues/TurkeyLearningInitiative/frontend)
+[![Netlify Status](https://api.netlify.com/api/v1/badges/d586bb45-fe8e-4a46-a57c-b14ac31ed3cf/deploy-status)](https://app.netlify.com/sites/superb-marshmallow-a16146/deploys)
 
 ## To support the project
 
