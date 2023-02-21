@@ -5,6 +5,7 @@ import { Box } from '@mui/material'
 import type { MRT_ColumnDef } from 'material-react-table' // If using TypeScript (optional, but recommended)
 import MaterialReactTable from 'material-react-table'
 import { FunctionComponent, useMemo, useState } from 'react'
+import Hero from '@/components/BrandHero'
 import AdminLayout from './AdminLayout'
 import { RowSelectionState } from '@tanstack/react-table'
 import DangerButton from '@/components/buttons/DangerButton'
