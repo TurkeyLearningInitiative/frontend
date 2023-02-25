@@ -1,14 +1,13 @@
+import DangerButton from '@/components/buttons/DangerButton'
 import PrimaryButton from '@/components/buttons/PrimaryButton'
-import SecondaryButton from '@/components/buttons/SecondaryButton'
-import SecondarySuccessButton from '@/components/buttons/SecondarySuccessButton'
-import { Box } from '@mui/material'
+import DropDown from '@/components/dropdown'
+import { DropDownItem } from '@/components/dropdown/DropDownItem'
+import { Box, Card, CardMedia } from '@mui/material'
+import { RowSelectionState } from '@tanstack/react-table'
 import type { MRT_ColumnDef } from 'material-react-table' // If using TypeScript (optional, but recommended)
 import MaterialReactTable from 'material-react-table'
 import { FunctionComponent, useMemo, useState } from 'react'
-import Hero from '@/components/BrandHero'
 import AdminLayout from './AdminLayout'
-import { RowSelectionState } from '@tanstack/react-table'
-import DangerButton from '@/components/buttons/DangerButton'
 
 interface ILectureNote {
   _id: string
@@ -52,7 +51,15 @@ const Dashboard: FunctionComponent<{ lectures: ILectureNote[] }> = ({
       {
         header: 'Görsel',
         accessorKey: 'heroImageUrl',
-        Cell: ({ cell }) => <img src={cell.getValue<string>()} />,
+        Cell: ({ cell }) => (
+          <Card sx={{ maxWidth: 300 }}>
+            <CardMedia
+              sx={{ height: 140, objectFit: 'contain' }}
+              image={cell.getValue<string>()}
+              title="green iguana"
+            />
+          </Card>
+        ),
       },
       {
         header: 'Etiketler',
@@ -97,21 +104,51 @@ const Dashboard: FunctionComponent<{ lectures: ILectureNote[] }> = ({
         Cell: ({ cell, row }) => {
           return (
             <>
-              <SecondaryButton
-                href={cell.getValue<string>()}
-                target="_blank"
-                rel="noopener noreferrer"
-                download={row.original['contentUrl']}
-              >
-                İndir
-              </SecondaryButton>
-              <SecondarySuccessButton
-                onClick={() => {
-                  console.log('onayla')
-                }}
-              >
-                Onayla
-              </SecondarySuccessButton>
+              <DropDown
+                cell={cell}
+                text="İşlemler"
+                actions={[
+                  <DropDownItem
+                    text="İndir"
+                    key="indir"
+                    href={cell.getValue<string>()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={row.original['contentUrl']}
+                  />,
+                  <DropDownItem
+                    text="Onayla"
+                    key="onayla"
+                    onClick={() => {
+                      console.log('onayla')
+                    }}
+                  />,
+                  <DropDownItem
+                    text="Sil"
+                    key="Sil"
+                    danger
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    }
+                    onClick={() => {
+                      console.log('sil')
+                    }}
+                  />,
+                ]}
+              />
             </>
           )
         },
