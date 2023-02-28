@@ -1,6 +1,10 @@
 import { FunctionComponent } from 'react'
 
-const SearchInput: FunctionComponent = () => {
+interface IProps {
+  handleChange: (value: string) => void
+}
+
+const SearchInput: FunctionComponent<IProps> = (props) => {
   return (
     <div className="relative">
       <svg
@@ -18,6 +22,7 @@ const SearchInput: FunctionComponent = () => {
         />
       </svg>
       <input
+        onChange={(e) => props.handleChange(e.target.value)}
         type="text"
         placeholder="Search"
         className="w-full py-1 pl-8 pr-4 text-gray-500 border rounded-md outline-none bg-gray-50 focus:bg-white focus:border-indigo-600"

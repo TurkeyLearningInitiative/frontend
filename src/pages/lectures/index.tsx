@@ -1,6 +1,18 @@
-import { Fragment, useState } from 'react'
+import DropDown from '@/components/dropdown'
+import { DropDownItem } from '@/components/dropdown/DropDownItem'
+import SearchInput from '@/components/SearchInput'
+import {
+  api,
+  CourseResponse,
+  getRunningQueriesThunk,
+  LectureNotesResponse,
+  UniversityResponse,
+  useGetCoursesQuery,
+  useGetLectureNotesByFilterMutation,
+  useGetUniversitiesQuery,
+} from '@/lib/services'
+import { wrapper } from '@/lib/store'
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
 import {
   ChevronDownIcon,
   FunnelIcon,
@@ -8,75 +20,218 @@ import {
   PlusIcon,
   Squares2X2Icon,
 } from '@heroicons/react/20/solid'
-import SearchInput from '@/components/SearchInput'
+import { XMarkIcon } from '@heroicons/react/24/outline'
+import { Box, Card, CardMedia } from '@mui/material'
+import update from 'immutability-helper'
+import { debounce } from 'lodash-es'
+import MaterialReactTable, { MRT_ColumnDef } from 'material-react-table'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 
-interface ILectureNote {
-  _id: string
-  title: string
-  description: string
-  author: string
-  uploader: string
-  heroImageUrl: string
-  tags: string[]
-  searchText: string
-  classId: string
-  majorId: string
-  contentUrl: string
-  isVerified: boolean
-  createdAt: Date
-  updatedAt: Date
-}
 const sortOptions = [
   { name: 'Most Popular', href: '#', current: true },
   { name: 'Best Rating', href: '#', current: false },
   { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
 ]
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Lectures(props: any) {
-  const lecturesArray: ILectureNote[] = props.lectures
+export default function Lectures() {
+  const columns = useMemo<MRT_ColumnDef<LectureNotesResponse>[]>(
+    () => [
+      {
+        accessorKey: 'title',
+        header: 'Başlık',
+      },
+      {
+        header: 'Açıklama',
+        accessorKey: 'description',
+      },
+      {
+        header: 'Yazan',
+        accessorKey: 'author',
+      },
+      {
+        header: 'Yükleyen',
+        accessorKey: 'uploader',
+      },
+      {
+        header: 'Görsel',
+        accessorKey: 'heroImageUrl',
+        Cell: ({ cell }) => (
+          <Card sx={{ maxWidth: 300 }}>
+            <CardMedia
+              sx={{ height: 140, objectFit: 'contain' }}
+              image={cell.getValue<string>()}
+              title="green iguana"
+            />
+          </Card>
+        ),
+      },
+      {
+        header: 'Etiketler',
+        accessorKey: 'tags',
+        Cell: ({ cell }) => {
+          const colors = ['#7c3aed', '#6366f1', '#2563eb']
+          return (
+            <>
+              {cell.getValue<string[]>().map((value, i) => (
+                <Box
+                  key={value}
+                  component="span"
+                  sx={() => ({
+                    backgroundColor: colors[i % 3],
+                    borderRadius: '0.25rem',
+                    color: '#fff',
+                    maxWidth: '9ch',
+                    p: '0.25rem',
+                    m: '0.3rem',
+                  })}
+                >
+                  {value}
+                </Box>
+              ))}
+            </>
+          )
+        },
+      },
+      {
+        header: 'Onay Durumu',
+        accessorKey: 'isVerified',
+        Cell: ({ cell, row }) =>
+          cell.getValue<boolean>() ? (
+            <span className="text-green-400">Onaylandı</span>
+          ) : (
+            <span className="text-red-400">Onaylanmadı</span>
+          ),
+      },
+      {
+        header: 'İşlemler',
+        accessorKey: '_id',
+        Cell: ({ cell, row }) => {
+          return (
+            <>
+              <DropDown
+                cell={cell}
+                text="İşlemler"
+                actions={[
+                  <DropDownItem
+                    text="İndir"
+                    key="indir"
+                    href={cell.getValue<string>()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={row.original['contentUrl']}
+                  />,
+                ]}
+              />
+            </>
+          )
+        },
+      },
+    ],
+    []
+  )
+
+  const { data: courses } = useGetCoursesQuery()
+  const [getLectureNotesByFilter, result] = useGetLectureNotesByFilterMutation()
+
+  const { data: universities } = useGetUniversitiesQuery()
+  const { data: universityMajors } = useGetUniversitiesQuery()
+
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
-  const universities = props.universities.map((university: any) => ({
-    value: university._id,
-    label: university.name,
-    checked: false,
-  }))
-  const universityMajors = props.universityMajors.map(
-    (universityMajor: any) => ({
+  const universitiesArray = universities?.map(
+    (university: UniversityResponse) => ({
+      value: university._id,
+      label: university.name,
+      checked: false,
+    })
+  )
+  const universityMajorsArray = universityMajors?.map(
+    (universityMajor: UniversityResponse) => ({
       value: universityMajor._id,
       label: universityMajor.name,
       checked: false,
     })
   )
-  const courses = props.courses.map((course: any) => ({
+  const coursesArray = courses?.map((course: CourseResponse) => ({
     value: course._id,
     label: course.name,
     checked: false,
   }))
-  const filters = [
-    {
-      id: 'university',
-      name: 'Üniversiteler',
-      options: universities,
-    },
-    {
-      id: 'major',
-      name: 'Bölüm',
-      options: universityMajors,
-    },
-    {
-      id: 'size',
-      name: 'Ders',
-      options: courses,
-    },
-  ]
 
-  console.log(props)
+  const [selectedFilters, setSelectedFilters] = useState<any>()
+  useEffect(() => {
+    getLectureNotesByFilter({
+      university: findFilters('university'),
+      major: findFilters('major'),
+      course: findFilters('course'),
+    })
+  }, [selectedFilters])
+
+  const findFilters = (id: string) => {
+    return (
+      (selectedFilters &&
+        selectedFilters
+          .find((filter: any) => filter.id === id)
+          ?.options?.find((option: { checked: boolean }) => option.checked)
+          ?.value) ??
+      '' ??
+      ''
+    )
+  }
+  const filters = useMemo(
+    () => [
+      {
+        id: 'university',
+        name: 'Üniversiteler',
+        options: universitiesArray,
+      },
+      {
+        id: 'major',
+        name: 'Bölüm',
+        options: universityMajorsArray,
+      },
+      {
+        id: 'course',
+        name: 'Ders',
+        options: coursesArray,
+      },
+    ],
+    [universitiesArray, universityMajorsArray, coursesArray]
+  )
+  const [searchedFilters, setSearchedFilters] = useState<
+    {
+      id: string
+      name: string
+      options:
+        | {
+            value: string
+            label: string
+            checked: boolean
+          }[]
+        | undefined
+    }[]
+  >(filters)
+
+  const handleSearch = debounce((value: string, id: string) => {
+    const searchedFilters = filters
+      .find((filter) => filter.id === id)
+      ?.options?.filter((option) =>
+        option.label.toLocaleLowerCase().includes(value.toLocaleLowerCase())
+      )
+    setSearchedFilters((prev: any) => {
+      const itemIndex = filters.findIndex((item) => item.id === id)
+
+      const updatedState = update(filters, {
+        [itemIndex]: {
+          options: { $set: searchedFilters },
+        },
+      })
+      return updatedState
+    })
+  }, 200)
   return (
     <div className="bg-white">
       <div>
@@ -112,7 +267,7 @@ export default function Lectures(props: any) {
                 <Dialog.Panel className="relative ml-auto flex h-full w-full max-w-xs flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl">
                   <div className="flex items-center justify-between px-4">
                     <h2 className="text-lg font-medium text-gray-900">
-                      Filters
+                      Filtreler
                     </h2>
                     <button
                       type="button"
@@ -126,7 +281,7 @@ export default function Lectures(props: any) {
 
                   {/* Filters */}
                   <form className="mt-4 border-t border-gray-200">
-                    {filters.map((section) => (
+                    {searchedFilters?.map((section) => (
                       <Disclosure
                         as="div"
                         key={section.id}
@@ -154,6 +309,34 @@ export default function Lectures(props: any) {
                                 </span>
                               </Disclosure.Button>
                             </h3>
+                            <Disclosure.Panel className="pt-6">
+                              <div className="space-y-6">
+                                {section?.options?.map((option, optionIdx) => (
+                                  <div
+                                    key={option.value}
+                                    className="flex items-center"
+                                  >
+                                    <input
+                                      id={`filter-mobile-${section.id}-${optionIdx}`}
+                                      name={`${section.id}[]`}
+                                      defaultValue={option.value}
+                                      type="checkbox"
+                                      defaultChecked={option.checked}
+                                      onChange={(value) => {
+                                        setSelectedFilters(value)
+                                      }}
+                                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                    />
+                                    <label
+                                      htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                                      className="ml-3 min-w-0 flex-1 text-gray-500"
+                                    >
+                                      {option.label}
+                                    </label>
+                                  </div>
+                                ))}
+                              </div>
+                            </Disclosure.Panel>
                           </>
                         )}
                       </Disclosure>
@@ -165,7 +348,7 @@ export default function Lectures(props: any) {
           </Dialog>
         </Transition.Root>
 
-        <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+        <main className="mx-auto max-w-8xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pt-24 pb-6">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               Ders Notları
@@ -221,7 +404,7 @@ export default function Lectures(props: any) {
                 type="button"
                 className="-m-2 ml-5 p-2 text-gray-400 hover:text-gray-500 sm:ml-7"
               >
-                <span className="sr-only">View grid</span>
+                <span className="sr-only">Grid Görünümü</span>
                 <Squares2X2Icon className="h-5 w-5" aria-hidden="true" />
               </button>
               <button
@@ -229,21 +412,21 @@ export default function Lectures(props: any) {
                 className="-m-2 ml-4 p-2 text-gray-400 hover:text-gray-500 sm:ml-6 lg:hidden"
                 onClick={() => setMobileFiltersOpen(true)}
               >
-                <span className="sr-only">Filters</span>
+                <span className="sr-only">Filtreler</span>
                 <FunnelIcon className="h-5 w-5" aria-hidden="true" />
               </button>
             </div>
           </div>
 
-          <section aria-labelledby="products-heading" className="pt-6 pb-24">
-            <h2 id="products-heading" className="sr-only">
-              Products
+          <section aria-labelledby="notes-heading" className="pt-6 pb-24">
+            <h2 id="notes-heading" className="sr-only">
+              Ders Notları
             </h2>
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
               <form className="hidden lg:block">
-                {filters.map((section) => (
+                {searchedFilters.map((section) => (
                   <Disclosure
                     as="div"
                     key={section.id}
@@ -271,21 +454,86 @@ export default function Lectures(props: any) {
                             </span>
                           </Disclosure.Button>
                         </h3>
+
+                        <Disclosure.Panel className="pt-6">
+                          <SearchInput
+                            handleChange={(value) =>
+                              handleSearch(value, section.id)
+                            }
+                          />
+                          <div className="space-y-4 overflow-auto h-60 pt-5">
+                            {section?.options?.map((option, optionIdx) => (
+                              <div
+                                key={option.value}
+                                className="flex items-center"
+                              >
+                                <input
+                                  id={`filter-${section.id}-${optionIdx}`}
+                                  name={`${section.id}[]`}
+                                  defaultValue={option.value}
+                                  type="checkbox"
+                                  defaultChecked={option.checked}
+                                  onChange={(e) => {
+                                    const itemIndex = filters.findIndex(
+                                      (item) => item.id === section.id
+                                    )
+                                    const subItemIndex =
+                                      filters[itemIndex]?.options?.findIndex(
+                                        (subItem) =>
+                                          subItem.value === e.target.value
+                                      ) ?? 0
+
+                                    const updatedState = update(filters, {
+                                      [itemIndex]: {
+                                        options: {
+                                          [subItemIndex]: {
+                                            checked: { $set: true },
+                                          },
+                                        },
+                                      },
+                                    })
+                                    setSelectedFilters(updatedState)
+                                  }}
+                                  className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                                />
+                                <label
+                                  htmlFor={`filter-${section.id}-${optionIdx}`}
+                                  className="ml-3 text-sm text-gray-600"
+                                >
+                                  {option.label}
+                                </label>
+                              </div>
+                            ))}
+                          </div>
+                        </Disclosure.Panel>
                       </>
                     )}
                   </Disclosure>
                 ))}
               </form>
 
-              {/* Product grid */}
+              {/* note grid */}
               <div className="lg:col-span-3">
-                {lecturesArray.map((lecture) => (
-                  <div key={lecture._id} className="lecture-card w-1/4">
-                    {lecture.classId}
-                  </div>
-                ))}
-                {/* <div className="h-96 rounded-lg border-4 border-dashed border-gray-200 lg:h-full" /> */}
-                {/* /End replace */}
+                <MaterialReactTable
+                  initialState={{
+                    density: 'compact',
+                    columnPinning: { right: ['_id'] },
+                  }}
+                  columns={columns}
+                  data={result?.data ?? ([] as LectureNotesResponse[])}
+                  enableRowSelection
+                  enableColumnOrdering
+                  enableGlobalFilter={false}
+                  enablePinning
+                  muiTableBodyProps={{
+                    sx: {
+                      //stripe the rows, make odd rows a darker color
+                      '& tr:nth-of-type(odd)': {
+                        backgroundColor: '#f5f5f5',
+                      },
+                    },
+                  }}
+                />
               </div>
             </div>
           </section>
@@ -294,31 +542,17 @@ export default function Lectures(props: any) {
     </div>
   )
 }
-export async function getStaticProps() {
-  const res = await fetch(
-    'https://api-production-7e9a.up.railway.app/v1/lecture-notes'
-  )
-  const lectures = await res.json()
-  const uni = await fetch(
-    'https://api-production-7e9a.up.railway.app/v1/universities'
-  )
-  const universities = await uni.json()
 
-  const majors = await fetch(
-    'https://api-production-7e9a.up.railway.app/v1/university-majors'
-  )
-  const universityMajors = await majors.json()
+export const getServerSideProps = wrapper.getServerSideProps(
+  (store) => async () => {
+    store.dispatch(api.endpoints.getCourses.initiate())
+    store.dispatch(api.endpoints.getUniversities.initiate())
+    store.dispatch(api.endpoints.getUniversityMajor.initiate())
 
-  const coursesRes = await fetch(
-    'https://api-production-7e9a.up.railway.app/v1/courses'
-  )
-  const courses = await coursesRes.json()
-  return {
-    props: {
-      lectures,
-      universities,
-      universityMajors,
-      courses,
-    },
+    await Promise.all(store.dispatch(getRunningQueriesThunk()))
+
+    return {
+      props: {},
+    }
   }
-}
+)
