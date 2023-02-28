@@ -1,5 +1,12 @@
-import Hero from '@/components/BrandHero'
-import { FunctionComponent } from 'react'
+import DangerButton from '@/components/buttons/DangerButton'
+import PrimaryButton from '@/components/buttons/PrimaryButton'
+import DropDown from '@/components/dropdown'
+import { DropDownItem } from '@/components/dropdown/DropDownItem'
+import { Box, Card, CardMedia } from '@mui/material'
+import { RowSelectionState } from '@tanstack/react-table'
+import type { MRT_ColumnDef } from 'material-react-table' // If using TypeScript (optional, but recommended)
+import MaterialReactTable from 'material-react-table'
+import { FunctionComponent, useMemo, useState } from 'react'
 import AdminLayout from './AdminLayout'
 
 interface ILectureNote {
@@ -21,148 +28,181 @@ interface ILectureNote {
 const Dashboard: FunctionComponent<{ lectures: ILectureNote[] }> = ({
   lectures,
 }) => {
+  const [rowSelection, setRowSelection] = useState<RowSelectionState>({})
+
+  const columns = useMemo<MRT_ColumnDef<Partial<ILectureNote>>[]>(
+    () => [
+      {
+        accessorKey: 'title', //simple recommended way to define a column
+        header: 'Başlık',
+      },
+      {
+        header: 'Açıklama',
+        accessorKey: 'description', //simple recommended way to define a column
+      },
+      {
+        header: 'Yazan',
+        accessorKey: 'author', //simple recommended way to define a column
+      },
+      {
+        header: 'Yükleyen',
+        accessorKey: 'uploader',
+      },
+      {
+        header: 'Görsel',
+        accessorKey: 'heroImageUrl',
+        Cell: ({ cell }) => (
+          <Card sx={{ maxWidth: 300 }}>
+            <CardMedia
+              sx={{ height: 140, objectFit: 'contain' }}
+              image={cell.getValue<string>()}
+              title="green iguana"
+            />
+          </Card>
+        ),
+      },
+      {
+        header: 'Etiketler',
+        accessorKey: 'tags',
+        Cell: ({ cell }) => {
+          const colors = ['#7c3aed', '#6366f1', '#2563eb']
+          return (
+            <>
+              {cell.getValue<string[]>().map((value, i) => (
+                <Box
+                  key={value}
+                  component="span"
+                  sx={() => ({
+                    backgroundColor: colors[i % 3],
+                    borderRadius: '0.25rem',
+                    color: '#fff',
+                    maxWidth: '9ch',
+                    p: '0.25rem',
+                    m: '0.3rem',
+                  })}
+                >
+                  {value}
+                </Box>
+              ))}
+            </>
+          )
+        },
+      },
+      {
+        header: 'Onay Durumu',
+        accessorKey: 'isVerified',
+        Cell: ({ cell, row }) =>
+          cell.getValue<boolean>() ? (
+            <span className="text-green-400">Onaylandı</span>
+          ) : (
+            <span className="text-red-400">Onaylanmadı</span>
+          ),
+      },
+      {
+        header: 'İşlemler',
+        accessorKey: '_id',
+        Cell: ({ cell, row }) => {
+          return (
+            <>
+              <DropDown
+                cell={cell}
+                text="İşlemler"
+                actions={[
+                  <DropDownItem
+                    text="İndir"
+                    key="indir"
+                    href={cell.getValue<string>()}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    download={row.original['contentUrl']}
+                  />,
+                  <DropDownItem
+                    text="Onayla"
+                    key="onayla"
+                    onClick={() => {
+                      console.log('onayla')
+                    }}
+                  />,
+                  <DropDownItem
+                    text="Sil"
+                    key="Sil"
+                    danger
+                    icon={
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        className="h-4 w-4"
+                        fill="none"
+                        viewBox="0 0 24 24"
+                        stroke="currentColor"
+                        stroke-width="2"
+                      >
+                        <path
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"
+                        />
+                      </svg>
+                    }
+                    onClick={() => {
+                      console.log('sil')
+                    }}
+                  />,
+                ]}
+              />
+            </>
+          )
+        },
+      },
+    ],
+    []
+  )
+
   return (
     <AdminLayout>
-      <Hero />
-      <div className="px-4 sm:px-6 lg:px-8">
-        <div className="sm:flex sm:items-center">
-          <div className="sm:flex-auto">
-            <h1 className="text-xl font-semibold text-gray-900">Notlar</h1>
-            <p className="mt-2 text-sm text-gray-700">
-              Sistemde bulunan tüm notları burada bulabilirsin.
-            </p>
-          </div>
-          <div className="mt-4 sm:mt-0 sm:ml-16 sm:flex-none">
-            <button
-              type="button"
-              className="inline-flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 sm:w-auto"
-            >
-              Not Ekle
-            </button>
-          </div>
-        </div>
-        <div className="mt-8 flex flex-col">
-          <div className="-my-2 -mx-4 overflow-x-auto sm:-mx-6 lg:-mx-8">
-            <div className="inline-block min-w-full py-2 align-middle md:px-6 lg:px-8">
-              <div className="overflow-hidden shadow ring-1 ring-black ring-opacity-5 md:rounded-lg">
-                <table className="min-w-full divide-y divide-gray-300">
-                  <thead className="bg-gray-50">
-                    <tr>
-                      <th
-                        scope="col"
-                        className="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-6"
-                      >
-                        Görsel
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Başlık
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Açıklama
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Yazan
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Yükleyen
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Etiketler
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        İçerik
-                      </th>
-                      <th
-                        scope="col"
-                        className="px-3 py-3.5 text-left text-sm font-semibold text-gray-900"
-                      >
-                        Onay Durumu
-                      </th>
-                      <th
-                        scope="col"
-                        className="relative py-3.5 pl-3 pr-4 sm:pr-6"
-                      >
-                        <span className="sr-only">Onayla</span>
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody className="divide-y divide-gray-200 bg-white">
-                    {lectures.map((lecture) => (
-                      <tr key={lecture.title}>
-                        <td className="whitespace-nowrap py-4 pl-4 pr-3 text-sm sm:pl-6">
-                          <div className="flex items-center">
-                            <img
-                              className="h-10 w-10 "
-                              src={lecture.heroImageUrl}
-                              alt=""
-                            />
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {lecture.title}
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">
-                            {lecture.description}
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">{lecture.author}</div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">
-                            {lecture.uploader}
-                          </div>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          {lecture.tags.map((tag) => (
-                            <span
-                              key={tag}
-                              className="inline-flex rounded-full bg-green-100 px-2 text-xs font-semibold leading-5 text-green-800"
-                            >
-                              {tag}
-                            </span>
-                          ))}
-                        </td>
-                        <td className="relative whitespace-nowrap py-4 pl-3 pr-4 text-right text-sm font-medium sm:pr-6">
-                          <a
-                            href={lecture.contentUrl}
-                            target="_blank"
-                            rel="noreferrer"
-                            className="text-indigo-600 hover:text-indigo-900"
-                          >
-                            İndir
-                          </a>
-                        </td>
-                        <td className="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
-                          <div className="text-gray-900">
-                            {lecture.isVerified ? 'Onaylandı' : 'Onaylanmadı'}
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
-                  </tbody>
-                </table>
-              </div>
-            </div>
+      <div className="mt-6 sm:px-6 lg:px-8">
+        <div className="mt-3 flex flex-col">
+          <div className="overflow-x-auto sm:-mx-6 lg:-mx-8">
+            <MaterialReactTable
+              initialState={{
+                density: 'compact',
+                columnPinning: { right: ['_id'] },
+              }}
+              state={{ rowSelection }}
+              columns={columns}
+              data={lectures}
+              enableRowSelection
+              enableColumnOrdering
+              enableGlobalFilter={false}
+              enablePinning
+              muiTableBodyProps={{
+                sx: {
+                  //stripe the rows, make odd rows a darker color
+                  '& tr:nth-of-type(odd)': {
+                    backgroundColor: '#f5f5f5',
+                  },
+                },
+              }}
+              renderTopToolbarCustomActions={({ table }) => (
+                <Box sx={{ display: 'flex', gap: '1rem', p: '4px' }}>
+                  <PrimaryButton
+                    onClick={() => {
+                      alert('Create New Account')
+                    }}
+                  >
+                    Not Ekle
+                  </PrimaryButton>
+                  <DangerButton
+                    disabled={Object.keys(rowSelection).length === 0}
+                    onClick={() => {
+                      alert('Delete Selected Accounts')
+                    }}
+                  >
+                    Seçili Notları Sil
+                  </DangerButton>
+                </Box>
+              )}
+              onRowSelectionChange={setRowSelection}
+            />
           </div>
         </div>
       </div>

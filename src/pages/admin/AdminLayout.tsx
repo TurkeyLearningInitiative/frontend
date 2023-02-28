@@ -1,23 +1,16 @@
+import { sideNavigation } from '@/common/constants'
+import SideBar from '@/components/SideBar'
 import { Dialog, Menu, Transition } from '@headlessui/react'
 import { MagnifyingGlassIcon } from '@heroicons/react/20/solid'
 import {
   Bars3BottomLeftIcon,
   BellIcon,
-  BookmarkSquareIcon,
   XMarkIcon,
 } from '@heroicons/react/24/outline'
 import { Fragment, FunctionComponent, PropsWithChildren, useState } from 'react'
 import Footer from '@/components/BrandFooter'
 import Logo from '@/components/Logo'
 
-const navigation = [
-  {
-    name: 'Ders Notları',
-    href: '/admin',
-    icon: BookmarkSquareIcon,
-    current: true,
-  },
-]
 const userNavigation = [
   { name: 'Your Profile', href: '/admin/profile' },
   { name: 'Settings', href: '#' },
@@ -91,7 +84,7 @@ const AdminLayout: FunctionComponent<IProps> = ({ children }) => {
                   </div>
                   <div className="mt-5 h-0 flex-1 overflow-y-auto">
                     <nav className="space-y-1 px-2">
-                      {navigation.map((item) => (
+                      {sideNavigation.map((item: any) => (
                         <a
                           key={item.name}
                           href={item.href}
@@ -133,37 +126,12 @@ const AdminLayout: FunctionComponent<IProps> = ({ children }) => {
               <Logo />
             </div>
             <div className="mt-5 flex flex-grow flex-col">
-              <nav className="flex-1 space-y-1 px-2 pb-4">
-                {navigation.map((item) => (
-                  <a
-                    key={item.name}
-                    href={item.href}
-                    className={classNames(
-                      item.current
-                        ? 'bg-gray-100 text-gray-900'
-                        : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900',
-                      'group rounded-md py-2 px-2 flex items-center text-sm font-medium'
-                    )}
-                  >
-                    <item.icon
-                      className={classNames(
-                        item.current
-                          ? 'text-gray-500'
-                          : 'text-gray-400 group-hover:text-gray-500',
-                        'mr-3 flex-shrink-0 h-6 w-6'
-                      )}
-                      aria-hidden="true"
-                    />
-                    {item.name}
-                  </a>
-                ))}
-              </nav>
+              <SideBar />
             </div>
           </div>
         </div>
-
         <div className="md:pl-64">
-          <div className="mx-auto flex max-w-4xl flex-col md:px-8 xl:px-0">
+          <div className="mx-auto flex max-w-7xl flex-col md:px-8 xl:px-0">
             <div className="sticky top-0 z-10 flex h-16 flex-shrink-0 border-b border-gray-200 bg-white">
               <button
                 type="button"

@@ -1,11 +1,10 @@
-import { useState } from 'react'
+import { navigation } from '@/common/constants'
 import { Dialog } from '@headlessui/react'
 import { Bars3Icon, XMarkIcon } from '@heroicons/react/24/outline'
+import { useState } from 'react'
+import TwitterButton from './buttons/TwitterButton'
 import Logo from './Logo'
 import SupportUs from './SupportUs'
-import TwitterButton from './TwitterButton'
-import { navigation } from '@/common/constants'
-import Image from 'next/image'
 export default function Landing() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
