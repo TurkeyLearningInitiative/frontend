@@ -97,16 +97,6 @@ export default function Lectures() {
         },
       },
       {
-        header: 'Onay Durumu',
-        accessorKey: 'isVerified',
-        Cell: ({ cell, row }) =>
-          cell.getValue<boolean>() ? (
-            <span className="text-green-400">Onaylandı</span>
-          ) : (
-            <span className="text-red-400">Onaylanmadı</span>
-          ),
-      },
-      {
         header: 'İşlemler',
         accessorKey: '_id',
         Cell: ({ cell, row }) => {
