@@ -42,10 +42,7 @@ export default function Footer() {
   return (
     <footer className="bg-white py-16">
       <div className="container px-2 mx-auto">
-        <nav
-          className="-mb-6 columns-2 sm:flex sm:justify-center sm:space-x-12"
-          aria-label="Footer"
-        >
+        <nav className="flex justify-center" aria-label="Footer">
           <SocialIcons />
         </nav>
         <p className="mt-10 text-center text-xs leading-5 text-secondary-500">
