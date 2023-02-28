@@ -3,6 +3,7 @@ import BaseLayout from '@/components/BaseLayout'
 import OurTeam from '@/components/OurTeam'
 import { Statistics } from '@/components/Statistics'
 import { FunctionComponent } from 'react'
+import { RecentLectures } from '@/components/RecentLectures'
 
 interface ILectureNote {
   _id: string
@@ -28,10 +29,7 @@ const Home: FunctionComponent<{ lectures: ILectureNote[] }> = ({
       <Hero />
       <Statistics />
       <OurTeam />
-      <div>
-        {' '}
-        <h1>Recent Lectures Section</h1>
-      </div>
+      <RecentLectures />
     </BaseLayout>
   )
 }
